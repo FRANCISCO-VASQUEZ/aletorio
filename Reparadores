@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Asignarcion de mesas aleatorios </title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #222;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+    }
+
+    #asignarBtn {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
+      transition: background-color 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    #asignarBtn:hover {
+      background-color: #45a049;
+    }
+
+    #listaResultados {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    #listaResultados li {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      text-align: center;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    #listaResultados li:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+  <h2>Asignarcion de mesas aleatorios</h2>
+  <button id="asignarBtn">Asignar números</button>
+  <ul id="listaResultados"></ul>
+
+  <script>
+    const nombres = [
+      'Jonathan', 'Luis', 'Carlos', 'Elias', 'Jorge', 'Camilo',
+      'Pedro', 'Cristian', 'Diego', 'Mario', 'Marcos', 'Leo',
+      'Fernando', 'Bastian', 'Raúl', 'Dario', 'David', 'Arturo',
+      'Andrés', 'juan', 'Javier', 'Mauricio', 'Miguel', 'Federico'
+    ];
+
+    const btn = document.getElementById('asignarBtn');
+    const listaResultados = document.getElementById('listaResultados');
+
+    function mezclarNumeros(min, max) {
+      const numeros = [];
+      for (let i = min; i <= max; i++) {
+        numeros.push(i);
+      }
+      for (let i = numeros.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+      }
+      return numeros;
+    }
+
+    btn.addEventListener('click', () => {
+      listaResultados.innerHTML = '';
+
+      const numerosAsignados = mezclarNumeros(1, 24);
+
+      nombres.forEach((nombre, index) => {
+        const numero = numerosAsignados[index];
+        const li = document.createElement('li');
+        li.textContent = `${numero} - ${nombre}`;
+        listaResultados.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
